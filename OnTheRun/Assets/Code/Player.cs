@@ -11,7 +11,7 @@ public class Player : MonoBehaviour {
     public GameObject CLeft;
     public GameObject CRight;
 
-    public float Speed = 5f;
+    public float Speed = 2f;
 
     enum EDirection {
         Left = 1,

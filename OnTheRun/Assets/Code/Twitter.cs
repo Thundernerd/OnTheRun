@@ -59,6 +59,11 @@ public class Twitter : MonoBehaviour {
                 yield return new WaitForSeconds( 5f );
                 Player.Slow = false;
                 break;
+            case "fisheye":
+                UnityStandardAssets.ImageEffects.Fisheye.Active = true;
+                yield return new WaitForSeconds( 5f );
+                UnityStandardAssets.ImageEffects.Fisheye.Active = false;
+                break;
         }
 
         Debug.Log( "Done with " + cmd );
