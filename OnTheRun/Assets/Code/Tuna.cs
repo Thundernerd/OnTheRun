@@ -36,6 +36,17 @@ public class Tuna : MonoBehaviour {
         var b = Camera.main.ScreenToWorldPoint( new Vector3( width, height ) );
 
         gInfo = new Rect( a.x, a.y, b.x - a.x, b.y - a.y );
+
+        for ( int x = 0; x < 16; x++ ) {
+            for ( int y = 0; y < 9; y++ ) {
+                if ( grid[y, x] == 0 ) continue;
+                var r = GetRect( x, 8 - y );
+                var gobj = new GameObject();
+                gobj.transform.position = r.center;
+                var col = gobj.AddComponent<BoxCollider2D>();
+                col.size = r.size;
+            }
+        }
     }
 
     void CalculateNew( float x, float y, ref float dist, ref Vector3 fpos ) {
