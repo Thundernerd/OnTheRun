@@ -3,6 +3,8 @@ using System.Collections;
 
 public class Player : MonoBehaviour {
 
+    public static bool Invert = false;
+
     public GameObject CDown;
     public GameObject CUp;
     public GameObject CLeft;
@@ -102,6 +104,12 @@ public class Player : MonoBehaviour {
         if ( ( currentDirection & EDirection.None ) == EDirection.None ) {
             mov.x = 0;
             mov.y = 0;
+        }
+
+        if ( Invert ) {
+            var temp = mov.x;
+            mov.x = -mov.y;
+            mov.y = -temp;
         }
 
         transform.position += mov * Time.deltaTime;
