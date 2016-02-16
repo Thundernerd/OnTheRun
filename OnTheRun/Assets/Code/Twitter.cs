@@ -35,7 +35,9 @@ public class Twitter : MonoBehaviour {
             var index = input.IndexOf( " " );
             cmd = input.Substring( 0, index ).Trim();
             var msg = input.Remove( 0, index ).Trim();
-            StartCoroutine( ShowMessage( msg ) );
+            StartCoroutine( ShowMessage( string.Format( "#{0}: {1}", cmd, msg ) ) );
+        } else {
+            StartCoroutine( ShowMessage( "#" + cmd ) );
         }
         Debug.Log( "Starting " + cmd );
 
@@ -71,6 +73,8 @@ public class Twitter : MonoBehaviour {
         }
 
         Debug.Log( "Done with " + cmd );
+
+        yield return new WaitForSeconds( 1 );
         isExecuting = false;
         yield break;
     }
@@ -80,7 +84,7 @@ public class Twitter : MonoBehaviour {
         yield return new WaitForSeconds( 0.25f );
         BannerText.transform.localPosition = new Vector3( 500, 200 );
         BannerText.GetComponent<Text>().text = message;
-        iTween.MoveBy( BannerText, new Vector3( -2000, 0 ), 100 );
+        iTween.MoveBy( BannerText, new Vector3( -7500, 0 ), 100 );
     }
 
     private IEnumerator Search() {
