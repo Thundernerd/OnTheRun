@@ -4,6 +4,7 @@ using System.Collections;
 public class Player : MonoBehaviour {
 
     public static bool Invert = false;
+    public static bool Slow = false;
 
     public GameObject CDown;
     public GameObject CUp;
@@ -110,6 +111,10 @@ public class Player : MonoBehaviour {
             var temp = mov.x;
             mov.x = -mov.y;
             mov.y = -temp;
+        }
+
+        if ( Slow ) {
+            mov /= 5f;
         }
 
         transform.position += mov * Time.deltaTime;

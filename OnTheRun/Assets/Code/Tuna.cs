@@ -6,6 +6,8 @@ using System;
 [ExecuteInEditMode]
 public class Tuna : MonoBehaviour {
 
+    public static bool Invisible = false;
+
     private int[,] grid = {
         {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
         {1,0,0,1,1,1,1,0,0,0,0,0,0,0,0,1},
@@ -24,11 +26,14 @@ public class Tuna : MonoBehaviour {
     public bool DrawGrid = true;
 
     private Rect gInfo = new Rect();
+    private SpriteRenderer rend;
 
     // Use this for initialization
     void Start() {
         if ( !Application.isPlaying ) return;
         Player = GameObject.Find( "Player" );
+
+        rend = GetComponent<SpriteRenderer>();
 
         var width = ( (float)Screen.width / (float)grid.GetLength( 1 ) );
         var height = ( (float)Screen.height / (float)grid.GetLength( 0 ) );
@@ -67,6 +72,12 @@ public class Tuna : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         if ( !Application.isPlaying ) return;
+
+        if ( Invisible && rend.enabled ) {
+            rend.enabled = false;
+        } else if ( !Invisible && !rend.enabled ) {
+            rend.enabled = true;
+        }
 
         if ( !found ) {
             found = true;

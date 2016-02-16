@@ -2,8 +2,11 @@
 using System.Collections;
 using System;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class Twitter : MonoBehaviour {
+
+    public GameObject BannerText;
 
     private List<string> idsDone = new List<string>();
     private List<string> commandsToExecute = new List<string>();
@@ -26,8 +29,16 @@ public class Twitter : MonoBehaviour {
         }
     }
 
-    private IEnumerator ExecuteCmd( string cmd ) {
+    private IEnumerator ExecuteCmd( string input ) {
+        var cmd = input;
+        if ( input.Contains( " " ) ) {
+            var index = input.IndexOf( " " );
+            cmd = input.Substring( 0, index ).Trim();
+            var msg = input.Remove( 0, index ).Trim();
+            StartCoroutine( ShowMessage( msg ) );
+        }
         Debug.Log( "Starting " + cmd );
+
         switch ( cmd ) {
             case "invert":
                 Player.Invert = true;
@@ -36,7 +47,17 @@ public class Twitter : MonoBehaviour {
                 break;
             case "shake":
                 iTween.ShakePosition( Camera.main.gameObject, new Vector3( 1.5f, 1.5f ), 3f );
-                yield return new WaitForSeconds( 3f );
+                yield return new WaitForSeconds( 5f );
+                break;
+            case "invisible":
+                Tuna.Invisible = true;
+                yield return new WaitForSeconds( 5f );
+                Tuna.Invisible = false;
+                break;
+            case "slow":
+                Player.Slow = true;
+                yield return new WaitForSeconds( 5f );
+                Player.Slow = false;
                 break;
         }
 
@@ -45,8 +66,16 @@ public class Twitter : MonoBehaviour {
         yield break;
     }
 
+    private IEnumerator ShowMessage( string message ) {
+        iTween.Stop( BannerText );
+        yield return new WaitForSeconds( 0.25f );
+        BannerText.transform.localPosition = new Vector3( 500, 200 );
+        BannerText.GetComponent<Text>().text = message;
+        iTween.MoveBy( BannerText, new Vector3( -2000, 0 ), 100 );
+    }
+
     private IEnumerator Search() {
-        var www = new WWW( "https://twitter.com/search?q=%23coconuts2016&src=typd" );
+        var www = new WWW( "https://twitter.com/search?f=tweets&vertical=default&q=%23coconuts2016&src=typd" );
         yield return www;
         var text = www.text;
         var index = text.IndexOf( "<div id=\"timeline\"" );
@@ -81,11 +110,12 @@ public class Twitter : MonoBehaviour {
 
             cmds.Add( temp );
             idsDone.Add( id );
-
-            Debug.Log( "Ey" );
         }
 
         cmds.Reverse();
         commandsToExecute.AddRange( cmds );
+
+        yield return new WaitForSeconds( 5 );
+        StartCoroutine( Search() );
     }
 }
