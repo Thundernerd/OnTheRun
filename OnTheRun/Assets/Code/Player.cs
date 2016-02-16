@@ -11,7 +11,7 @@ public class Player : MonoBehaviour {
     public GameObject CLeft;
     public GameObject CRight;
 
-    public float Speed = 5f;
+    public float Speed = 2f;
 
     enum EDirection {
         Left = 1,
@@ -24,9 +24,11 @@ public class Player : MonoBehaviour {
     private EDirection currentDirection = EDirection.None;
     //private EDirection previousDirection = EDirection.None;
 
+    private GameObject tuna;
+
     // Use this for initialization
     void Start() {
-
+        tuna = GameObject.Find( "TUNA" );
     }
 
     // Update is called once per frame
@@ -118,6 +120,11 @@ public class Player : MonoBehaviour {
         }
 
         transform.position += mov * Time.deltaTime;
+
+        var tunadist = ( tuna.transform.position - transform.position ).magnitude;
+        if ( tunadist < 0.35f ) {
+            
+        }
     }
 
     private void ChangeDirection( EDirection newDirection ) {

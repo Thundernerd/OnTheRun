@@ -13,8 +13,8 @@ public class Tuna : MonoBehaviour {
         {1,0,0,1,1,1,1,0,0,0,0,0,0,0,0,1},
         {1,0,0,1,1,1,1,0,0,0,0,0,0,0,0,1},
         {1,0,0,1,1,1,1,0,0,0,0,0,0,0,0,1},
-        {1,0,0,1,1,0,0,0,0,0,0,0,0,0,0,1},
-        {1,0,0,1,1,0,0,0,0,0,0,0,0,1,1,1},
+        {1,0,0,1,1,0,0,0,0,1,1,0,0,0,0,1},
+        {1,0,0,1,1,0,0,0,0,1,1,0,0,1,1,1},
         {1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1},
         {1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1},
         {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
@@ -22,7 +22,7 @@ public class Tuna : MonoBehaviour {
 
     [HideInInspector]
     public GameObject Player;
-    public float Speed = 2.5f;
+    public float Speed = 1.5f;
     public bool DrawGrid = true;
 
     private Rect gInfo = new Rect();
