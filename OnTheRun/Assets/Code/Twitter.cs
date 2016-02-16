@@ -64,6 +64,10 @@ public class Twitter : MonoBehaviour {
                 yield return new WaitForSeconds( 5f );
                 UnityStandardAssets.ImageEffects.Fisheye.Active = false;
                 break;
+            case "reddit":
+                Shroomer.Activate();
+                yield return new WaitForSeconds( 5f );
+                break;
         }
 
         Debug.Log( "Done with " + cmd );
