@@ -20,6 +20,38 @@ public class Twitter : MonoBehaviour {
         startOfGame = DateTime.Now;
         StartCoroutine( Search() );
         aud = GetComponent<AudioSource>();
+        StartCoroutine( AddDifficulty() );
+    }
+
+    private IEnumerator AddDifficulty() {
+        yield return new WaitForSeconds( 7.5f );
+        while ( true ) {
+            if ( commandsToExecute.Count == 0 ) {
+                int val = UnityEngine.Random.Range( 0, 6 );
+                switch ( val ) {
+                    case 0:
+                        commandsToExecute.Add( "invert" );
+                        break;
+                    case 1:
+                        commandsToExecute.Add( "shake" );
+                        break;
+                    case 2:
+                        commandsToExecute.Add( "invisible" );
+                        break;
+                    case 3:
+                        commandsToExecute.Add( "fisheye" );
+                        break;
+                    case 4:
+                        commandsToExecute.Add( "slow" );
+                        break;
+                    case 5:
+                        commandsToExecute.Add( "reddit" );
+                        break;
+                }
+            }
+
+            yield return new WaitForSeconds( 10 );
+        }
     }
 
     // Update is called once per frame
