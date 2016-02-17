@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-using UnityEditor;
 using System;
 
 [ExecuteInEditMode]
@@ -11,7 +10,7 @@ public class Tuna : MonoBehaviour {
 
     private int[,] grid = {
         {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-        {1,1,0,0,1,1,1,1,0,1,1,1,0,0,1,1},
+        {1,1,0,0,1,1,1,1,1,1,1,1,0,0,1,1},
         {1,1,0,0,1,1,1,1,0,0,0,0,0,0,1,1},
         {1,1,0,0,1,1,0,0,0,0,0,0,0,0,1,1},
         {1,1,0,0,1,1,0,0,0,0,1,1,0,0,0,1},
