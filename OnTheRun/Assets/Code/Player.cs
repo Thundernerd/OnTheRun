@@ -11,6 +11,7 @@ public class Player : MonoBehaviour {
     public GameObject CUp;
     public GameObject CLeft;
     public GameObject CRight;
+    public GameObject CIdle;
 
     public float Speed = 2f;
 
@@ -63,8 +64,9 @@ public class Player : MonoBehaviour {
 
             if ( !Input.anyKey ) {
                 currentDirection |= EDirection.None;
+
                 //ChangeDirection( EDirection.None );
-                //SwitchCharacter();
+                SwitchCharacter();
             } else {
                 if ( Input.GetKey( KeyCode.W ) || Input.GetKey( KeyCode.UpArrow ) ) {
                     ChangeDirection( EDirection.Up );
@@ -139,9 +141,18 @@ public class Player : MonoBehaviour {
     }
 
     private void SwitchCharacter() {
-        CDown.SetActive( currentDirection == EDirection.Down );
-        CUp.SetActive( currentDirection == EDirection.Up );
-        CLeft.SetActive( currentDirection == EDirection.Left );
-        CRight.SetActive( currentDirection == EDirection.Right );
+        if ( ( currentDirection & EDirection.None ) == EDirection.None ) {
+            CDown.SetActive( false );
+            CUp.SetActive( false );
+            CLeft.SetActive( false );
+            CRight.SetActive( false );
+            CIdle.SetActive( true );
+        } else {
+            CIdle.SetActive( false );
+            CDown.SetActive( currentDirection == EDirection.Down );
+            CUp.SetActive( currentDirection == EDirection.Up );
+            CLeft.SetActive( currentDirection == EDirection.Left );
+            CRight.SetActive( currentDirection == EDirection.Right );
+        }
     }
 }
