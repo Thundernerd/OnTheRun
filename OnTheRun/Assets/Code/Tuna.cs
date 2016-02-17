@@ -10,13 +10,13 @@ public class Tuna : MonoBehaviour {
 
     private int[,] grid = {
         {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-        {1,0,0,1,1,1,1,0,0,0,0,0,0,0,0,1},
-        {1,0,0,1,1,1,1,0,0,0,0,0,0,0,0,1},
-        {1,0,0,1,1,1,1,0,0,0,0,0,0,0,0,1},
-        {1,0,0,1,1,0,0,0,0,1,1,0,0,0,0,1},
-        {1,0,0,1,1,0,0,0,0,1,1,0,0,1,1,1},
-        {1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1},
-        {1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1},
+        {1,0,0,0,1,1,1,1,0,0,0,0,0,0,0,1},
+        {1,0,0,0,1,1,1,1,0,0,0,0,0,0,0,1},
+        {1,0,0,0,1,1,0,0,0,0,0,0,0,0,0,1},
+        {1,0,0,0,1,1,0,0,0,1,1,0,0,0,0,1},
+        {1,0,0,0,1,1,0,0,0,1,1,0,0,0,0,1},
+        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
         {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
     };
 
@@ -27,11 +27,13 @@ public class Tuna : MonoBehaviour {
 
     private Rect gInfo = new Rect();
     private SpriteRenderer rend;
+    private AudioSource asource;
 
     // Use this for initialization
     void Start() {
         if ( !Application.isPlaying ) return;
         Player = GameObject.Find( "Player" );
+        asource = GetComponent<AudioSource>();
 
         rend = GetComponent<SpriteRenderer>();
 
@@ -116,6 +118,15 @@ public class Tuna : MonoBehaviour {
             newp = fpos;
         }
 
+        if ( delta != Vector3.zero ) {
+            if ( !asource.isPlaying ) {
+                asource.Play();
+            }
+        } else {
+            if ( asource.isPlaying ) {
+                asource.Pause();
+            }
+        }
 
         transform.position += delta * Time.deltaTime;
 
