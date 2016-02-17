@@ -14,9 +14,12 @@ public class Twitter : MonoBehaviour {
     private DateTime startOfGame;
     private bool isExecuting = false;
 
+    private AudioSource aud;
+
     void Start() {
         startOfGame = DateTime.Now;
         StartCoroutine( Search() );
+        aud = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -82,12 +85,14 @@ public class Twitter : MonoBehaviour {
     private IEnumerator ShowMessage( string message ) {
         iTween.Stop( BannerText );
         yield return new WaitForSeconds( 0.25f );
+        aud.Play();
         BannerText.transform.localPosition = new Vector3( 500, 200 );
         BannerText.GetComponent<Text>().text = message;
         iTween.MoveBy( BannerText, new Vector3( -7500, 0 ), 100 );
     }
 
     private IEnumerator Search() {
+        Debug.Log( "Searching Twitter" );
         var www = new WWW( "https://twitter.com/search?f=tweets&vertical=default&q=%23coconuts2016&src=typd" );
         yield return www;
         var text = www.text;
@@ -115,7 +120,7 @@ public class Twitter : MonoBehaviour {
             var dt = new DateTime( 1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc );
             dt = dt.AddSeconds( double.Parse( tstamp ) );
             dt = dt.AddHours( 1 );
-            //if ( dt.Ticks < startOfGame.Ticks ) continue;
+            if ( dt.Ticks < startOfGame.Ticks ) continue;
 
             var temp = item.Remove( 0, item.IndexOf( "<strong>coconuts2016</strong>" ) );
             temp = temp.Remove( 0, temp.IndexOf( "</a>" ) + 4 );
@@ -125,8 +130,8 @@ public class Twitter : MonoBehaviour {
             idsDone.Add( id );
         }
 
-        //cmds.Reverse();
-        //commandsToExecute.AddRange( cmds );
+        cmds.Reverse();
+        commandsToExecute.AddRange( cmds );
 
         yield return new WaitForSeconds( 5 );
         StartCoroutine( Search() );
