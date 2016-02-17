@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour {
 
@@ -87,6 +88,11 @@ public class Player : MonoBehaviour {
             }
         }
 
+        if ( Input.GetKeyUp( KeyCode.R ) ) {
+            var scene = SceneManager.GetActiveScene();
+            SceneManager.LoadScene( scene.name );
+        }
+
         var mov = new Vector3();
 
         switch ( currentDirection ) {
@@ -123,7 +129,7 @@ public class Player : MonoBehaviour {
 
         var tunadist = ( tuna.transform.position - transform.position ).magnitude;
         if ( tunadist < 0.35f ) {
-            
+
         }
     }
 

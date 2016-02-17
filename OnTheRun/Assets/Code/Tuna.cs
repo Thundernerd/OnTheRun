@@ -10,15 +10,22 @@ public class Tuna : MonoBehaviour {
 
     private int[,] grid = {
         {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-        {1,0,0,0,1,1,1,1,0,1,1,1,0,0,0,1},
-        {1,0,0,0,1,1,1,1,0,0,0,0,0,0,0,1},
-        {1,0,0,0,1,1,0,0,0,0,0,0,0,0,0,1},
-        {1,0,0,0,1,1,0,0,0,0,0,0,0,0,0,1},
+        {1,0,0,0,1,1,1,1,0,1,1,1,0,0,1,1},
+        {1,0,0,0,1,1,1,1,0,0,0,0,0,0,1,1},
+        {1,0,0,0,1,1,0,0,0,0,0,0,0,0,1,1},
+        {1,0,0,0,1,1,0,0,0,0,1,1,0,0,0,1},
         {1,0,0,1,1,1,0,0,0,0,1,1,0,0,0,1},
-        {1,0,0,0,0,0,0,0,0,0,1,1,0,0,0,1},
+        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
         {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
         {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
     };
+
+    //private Vector3[] startPositions = {
+    //    //new Vector3(3.81f,1.2f),
+    //    new Vector3(5,-3.26f),
+    //    new Vector3(-3.87f,-2.21f),
+    //    new Vector3(-6.09f,1.13f),
+    //};
 
     [HideInInspector]
     public GameObject Player;
@@ -32,10 +39,15 @@ public class Tuna : MonoBehaviour {
     // Use this for initialization
     void Start() {
         if ( !Application.isPlaying ) return;
-        Player = GameObject.Find( "Player" );
-        asource = GetComponent<AudioSource>();
 
+        //transform.position = startPositions[UnityEngine.Random.Range( 0, startPositions.Length )];
+
+        Player = GameObject.Find( "Player" );
+
+        asource = GetComponent<AudioSource>();
         rend = GetComponent<SpriteRenderer>();
+
+        //StartCoroutine( Wiggle() );
 
         var width = ( (float)Screen.width / (float)grid.GetLength( 1 ) );
         var height = ( (float)Screen.height / (float)grid.GetLength( 0 ) );
@@ -54,6 +66,19 @@ public class Tuna : MonoBehaviour {
                 col.size = r.size;
             }
         }
+
+        while ( true ) {
+            var x = UnityEngine.Random.Range( 0, 15 );
+            var y = UnityEngine.Random.Range( 0, 8 );
+
+            if ( grid[8 - y, x] == 1 ) continue;
+            var pos = GetPosition( x, y );
+            var mag = ( pos - Player.transform.position ).magnitude;
+            if ( mag < 1.75f ) continue;
+
+            transform.position = GetPosition( x, y );
+            break;
+        }
     }
 
     void CalculateNew( float x, float y, ref float dist, ref Vector3 fpos ) {
@@ -70,6 +95,22 @@ public class Tuna : MonoBehaviour {
     private Vector3 delta = new Vector3();
     private Vector3 newp = new Vector3();
     private bool found = false;
+
+    private bool isMoving = false;
+
+    //private IEnumerator Wiggle() {
+    //while ( true ) {
+
+    //    if ( isMoving ) {
+    //        transform.rotation = Quaternion.Euler( 0, 0, -10 );
+    //        yield return new WaitForSeconds( 0.05f );
+    //        transform.rotation = Quaternion.Euler( 0, 0, 10 );
+    //        yield return new WaitForSeconds( 0.05f );
+    //    }
+
+    //    yield return null;
+    //}
+    //}
 
     // Update is called once per frame
     void Update() {
@@ -122,10 +163,14 @@ public class Tuna : MonoBehaviour {
             if ( !asource.isPlaying ) {
                 asource.Play();
             }
+
+            isMoving = true;
         } else {
             if ( asource.isPlaying ) {
                 asource.Pause();
             }
+
+            isMoving = false;
         }
 
         transform.position += delta * Time.deltaTime;
