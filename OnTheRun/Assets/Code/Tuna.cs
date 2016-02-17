@@ -7,6 +7,7 @@ using System;
 public class Tuna : MonoBehaviour {
 
     public static bool Invisible = false;
+    public static bool Caught = false;
 
     private int[,] grid = {
         {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
@@ -39,6 +40,9 @@ public class Tuna : MonoBehaviour {
     // Use this for initialization
     void Start() {
         if ( !Application.isPlaying ) return;
+
+        Caught = false;
+        Invisible = false;
 
         //transform.position = startPositions[UnityEngine.Random.Range( 0, startPositions.Length )];
 
@@ -115,6 +119,8 @@ public class Tuna : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         if ( !Application.isPlaying ) return;
+
+        if ( Caught ) return;
 
         if ( Invisible && rend.enabled ) {
             rend.enabled = false;

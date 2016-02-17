@@ -56,7 +56,7 @@ public class Twitter : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        if ( !isExecuting && commandsToExecute.Count > 0 ) {
+        if ( !isExecuting && commandsToExecute.Count > 0 && !Tuna.Caught ) {
             isExecuting = true;
             var cmd = commandsToExecute[0];
             commandsToExecute.RemoveAt( 0 );
@@ -65,6 +65,9 @@ public class Twitter : MonoBehaviour {
     }
 
     private IEnumerator ExecuteCmd( string input ) {
+        if ( Tuna.Caught ) {
+            yield break;
+        }
         var cmd = input;
         if ( input.Contains( " " ) ) {
             var index = input.IndexOf( " " );

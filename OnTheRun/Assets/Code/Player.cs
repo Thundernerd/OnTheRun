@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour {
 
@@ -12,6 +13,8 @@ public class Player : MonoBehaviour {
     public GameObject CLeft;
     public GameObject CRight;
     public GameObject CIdle;
+
+    public Text LaterText;
 
     public float Speed = 2f;
 
@@ -30,6 +33,8 @@ public class Player : MonoBehaviour {
 
     // Use this for initialization
     void Start() {
+        Invert = false;
+        Slow = false;
         tuna = GameObject.Find( "TUNA" );
     }
 
@@ -131,8 +136,37 @@ public class Player : MonoBehaviour {
 
         var tunadist = ( tuna.transform.position - transform.position ).magnitude;
         if ( tunadist < 0.35f ) {
+            Tuna.Caught = true;
+            StartCoroutine( ShowSomeTimeLater() );
 
         }
+    }
+
+    private IEnumerator ShowSomeTimeLater() {
+        var fp = GameObject.Find( "_bpCameraFade" );
+        var fr = fp.GetComponent<SpriteRenderer>();
+
+        while ( fr.color.a < 1 ) {
+            var c = fr.color;
+            c.a += Time.deltaTime / 3f;
+            fr.color = c;
+            yield return new WaitForEndOfFrame();
+        }
+
+        while ( LaterText.color.a < 1 ) {
+            var c = LaterText.color;
+            c.a += Time.deltaTime /3;
+            LaterText.color = c;
+
+            yield return new WaitForEndOfFrame();
+        }
+
+        yield return new WaitForSeconds( 3f );
+
+        var scene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene( scene.name );
+
+        yield break;
     }
 
     private void ChangeDirection( EDirection newDirection ) {
