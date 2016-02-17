@@ -125,8 +125,8 @@ public class Twitter : MonoBehaviour {
             idsDone.Add( id );
         }
 
-        cmds.Reverse();
-        commandsToExecute.AddRange( cmds );
+        //cmds.Reverse();
+        //commandsToExecute.AddRange( cmds );
 
         yield return new WaitForSeconds( 5 );
         StartCoroutine( Search() );
