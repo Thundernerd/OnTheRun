@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 54a0d08dbc187c148b2a8b3164e90193
-timeCreated: 1455734355
+timeCreated: 1455736597
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -9,6 +9,8 @@ TextureImporter:
     21300004: Furniture_2
     21300006: Furniture_3
     21300008: Furniture_4
+    21300010: Furniture_5
+    21300012: Furniture_6
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -101,6 +103,26 @@ TextureImporter:
         y: 749
         width: 127
         height: 267
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Furniture_5
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 491
+        width: 81
+        height: 269
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Furniture_6
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 491
+        width: 81
+        height: 269
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
