@@ -24,8 +24,9 @@ public class Twitter : MonoBehaviour {
     }
 
     private IEnumerator AddDifficulty() {
-        yield return new WaitForSeconds( 7.5f );
         while ( true ) {
+            yield return new WaitForSeconds( 15 );
+
             if ( commandsToExecute.Count == 0 ) {
                 int val = UnityEngine.Random.Range( 0, 6 );
                 switch ( val ) {
@@ -50,7 +51,6 @@ public class Twitter : MonoBehaviour {
                 }
             }
 
-            yield return new WaitForSeconds( 15 );
         }
     }
 
